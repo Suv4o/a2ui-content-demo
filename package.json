@@ -1,0 +1,28 @@
+{
+    "name": "a2ui-content-demo",
+    "version": "1.0.0",
+    "description": "A2UI Demo: LLM-driven UI rendering with Lit Web Components",
+    "type": "module",
+    "scripts": {
+        "dev": "concurrently -k -n \"SERVER,CLIENT\" -c \"blue,magenta\" \"npm run server\" \"npm run client\"",
+        "server": "tsx --env-file=.env server/index.ts",
+        "client": "vite",
+        "build": "vite build"
+    },
+    "dependencies": {
+        "@google/generative-ai": "^0.21.0",
+        "cors": "^2.8.5",
+        "express": "^4.21.0",
+        "lit": "^3.2.0",
+        "marked": "^15.0.0"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.17",
+        "@types/express": "^5.0.0",
+        "@types/node": "^22.10.0",
+        "concurrently": "^9.1.0",
+        "tsx": "^4.19.0",
+        "typescript": "^5.7.0",
+        "vite": "^6.0.0"
+    }
+}

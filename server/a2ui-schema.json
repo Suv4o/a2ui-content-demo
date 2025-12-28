@@ -1,0 +1,296 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "A2UI Content Demo Schema",
+    "description": "Schema for LLM-generated UI components based on article content",
+    "type": "object",
+    "required": ["surfaceUpdate"],
+    "properties": {
+        "surfaceUpdate": {
+            "type": "object",
+            "required": ["surfaceId", "components"],
+            "properties": {
+                "surfaceId": {
+                    "type": "string",
+                    "description": "Unique identifier for the rendering surface"
+                },
+                "components": {
+                    "type": "array",
+                    "description": "List of UI components to render",
+                    "items": {
+                        "$ref": "#/definitions/Component"
+                    }
+                }
+            }
+        },
+        "dataModelUpdate": {
+            "type": "object",
+            "properties": {
+                "surfaceId": { "type": "string" },
+                "contents": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "key": { "type": "string" },
+                            "value": {}
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Component": {
+            "type": "object",
+            "required": ["id", "component"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier for this component"
+                },
+                "component": {
+                    "type": "object",
+                    "description": "Component type and properties",
+                    "oneOf": [
+                        { "$ref": "#/definitions/HeroSection" },
+                        { "$ref": "#/definitions/TextBlock" },
+                        { "$ref": "#/definitions/ImageGallery" },
+                        { "$ref": "#/definitions/CodeBlock" },
+                        { "$ref": "#/definitions/Card" },
+                        { "$ref": "#/definitions/Column" },
+                        { "$ref": "#/definitions/Row" },
+                        { "$ref": "#/definitions/Callout" },
+                        { "$ref": "#/definitions/List" },
+                        { "$ref": "#/definitions/Divider" },
+                        { "$ref": "#/definitions/Quote" },
+                        { "$ref": "#/definitions/Table" },
+                        { "$ref": "#/definitions/Metadata" }
+                    ]
+                }
+            }
+        },
+        "HeroSection": {
+            "type": "object",
+            "required": ["HeroSection"],
+            "properties": {
+                "HeroSection": {
+                    "type": "object",
+                    "required": ["title"],
+                    "properties": {
+                        "title": { "type": "string" },
+                        "subtitle": { "type": "string" },
+                        "imageUrl": { "type": "string" },
+                        "overlay": { "type": "boolean", "default": true },
+                        "height": { "type": "string", "enum": ["small", "medium", "large", "full"] }
+                    }
+                }
+            }
+        },
+        "TextBlock": {
+            "type": "object",
+            "required": ["TextBlock"],
+            "properties": {
+                "TextBlock": {
+                    "type": "object",
+                    "required": ["content"],
+                    "properties": {
+                        "content": { "type": "string", "description": "Markdown or plain text content" },
+                        "variant": { "type": "string", "enum": ["body", "lead", "small"] }
+                    }
+                }
+            }
+        },
+        "ImageGallery": {
+            "type": "object",
+            "required": ["ImageGallery"],
+            "properties": {
+                "ImageGallery": {
+                    "type": "object",
+                    "required": ["images"],
+                    "properties": {
+                        "images": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "url": { "type": "string" },
+                                    "caption": { "type": "string" },
+                                    "alt": { "type": "string" }
+                                }
+                            }
+                        },
+                        "columns": { "type": "integer", "minimum": 1, "maximum": 4, "default": 3 },
+                        "lightbox": { "type": "boolean", "default": true }
+                    }
+                }
+            }
+        },
+        "CodeBlock": {
+            "type": "object",
+            "required": ["CodeBlock"],
+            "properties": {
+                "CodeBlock": {
+                    "type": "object",
+                    "required": ["code"],
+                    "properties": {
+                        "code": { "type": "string" },
+                        "language": { "type": "string" },
+                        "title": { "type": "string" },
+                        "showLineNumbers": { "type": "boolean", "default": false }
+                    }
+                }
+            }
+        },
+        "Card": {
+            "type": "object",
+            "required": ["Card"],
+            "properties": {
+                "Card": {
+                    "type": "object",
+                    "properties": {
+                        "title": { "type": "string" },
+                        "content": { "type": "string" },
+                        "imageUrl": { "type": "string" },
+                        "variant": { "type": "string", "enum": ["elevated", "outlined", "filled"] }
+                    }
+                }
+            }
+        },
+        "Column": {
+            "type": "object",
+            "required": ["Column"],
+            "properties": {
+                "Column": {
+                    "type": "object",
+                    "properties": {
+                        "children": {
+                            "type": "array",
+                            "items": { "type": "string", "description": "Component IDs" }
+                        },
+                        "gap": { "type": "string", "enum": ["none", "small", "medium", "large"] },
+                        "align": { "type": "string", "enum": ["start", "center", "end", "stretch"] }
+                    }
+                }
+            }
+        },
+        "Row": {
+            "type": "object",
+            "required": ["Row"],
+            "properties": {
+                "Row": {
+                    "type": "object",
+                    "properties": {
+                        "children": {
+                            "type": "array",
+                            "items": { "type": "string", "description": "Component IDs" }
+                        },
+                        "gap": { "type": "string", "enum": ["none", "small", "medium", "large"] },
+                        "wrap": { "type": "boolean", "default": true }
+                    }
+                }
+            }
+        },
+        "Callout": {
+            "type": "object",
+            "required": ["Callout"],
+            "properties": {
+                "Callout": {
+                    "type": "object",
+                    "required": ["content"],
+                    "properties": {
+                        "content": { "type": "string" },
+                        "type": { "type": "string", "enum": ["info", "warning", "success", "tip"] },
+                        "title": { "type": "string" }
+                    }
+                }
+            }
+        },
+        "List": {
+            "type": "object",
+            "required": ["List"],
+            "properties": {
+                "List": {
+                    "type": "object",
+                    "required": ["items"],
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "ordered": { "type": "boolean", "default": false },
+                        "icon": { "type": "string" }
+                    }
+                }
+            }
+        },
+        "Divider": {
+            "type": "object",
+            "required": ["Divider"],
+            "properties": {
+                "Divider": {
+                    "type": "object",
+                    "properties": {
+                        "style": { "type": "string", "enum": ["solid", "dashed", "dotted"] }
+                    }
+                }
+            }
+        },
+        "Quote": {
+            "type": "object",
+            "required": ["Quote"],
+            "properties": {
+                "Quote": {
+                    "type": "object",
+                    "required": ["text"],
+                    "properties": {
+                        "text": { "type": "string" },
+                        "author": { "type": "string" },
+                        "source": { "type": "string" }
+                    }
+                }
+            }
+        },
+        "Table": {
+            "type": "object",
+            "required": ["Table"],
+            "properties": {
+                "Table": {
+                    "type": "object",
+                    "required": ["headers", "rows"],
+                    "properties": {
+                        "headers": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "rows": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            }
+                        },
+                        "caption": { "type": "string" }
+                    }
+                }
+            }
+        },
+        "Metadata": {
+            "type": "object",
+            "required": ["Metadata"],
+            "properties": {
+                "Metadata": {
+                    "type": "object",
+                    "properties": {
+                        "author": { "type": "string" },
+                        "date": { "type": "string" },
+                        "tags": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "readTime": { "type": "string" }
+                    }
+                }
+            }
+        }
+    }
+}
