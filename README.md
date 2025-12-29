@@ -1,5 +1,9 @@
 # A2UI Content Demo
 
+![Landing Image](https://res.cloudinary.com/suv4o/image/upload/q_auto,f_auto,w_750,e_sharpen:100/v1766977382/blog/building-content-adaptive-interfaces-with-googles-a2ui/hero-building-content-adaptive-interfaces-with-googles-a2ui_jc2fg2)
+
+> This project is part of my blog article **[Building Content-Adaptive Interfaces with Google's A2UI](https://www.trpkovski.com/2025/12/29/building-content-adaptive-interfaces-with-googles-a2ui)**. To explore in detail how this is built, check it out!
+
 A demonstration of [A2UI (Agent → UI)](https://a2ui.org/) protocol using **Node.js**, **Lit**, and **Google Gemini**. This project shows how an AI agent can dynamically generate UI layouts for article content without any user text input.
 
 ## What is A2UI?
